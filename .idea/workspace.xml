@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8263d1f2-18a2-4322-a0dc-544f0b28fc8d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Vec.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/geode/Geode.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/geode/GeodeProjection.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/solution/Solution.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/solution/Solver.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/UselessSolver.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/geode/GeodeProjection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/geode/GeodeProjection.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,6 +51,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin File" />
+        <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -106,7 +108,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1662862018755</updated>
-      <workItem from="1662862020397" duration="4929000" />
+      <workItem from="1662862020397" duration="7602000" />
     </task>
     <servers />
   </component>

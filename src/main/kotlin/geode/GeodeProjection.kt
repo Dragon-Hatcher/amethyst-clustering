@@ -31,6 +31,12 @@ class GeodeProjection(private val cells: Map<Vec2, CellType>) {
     operator fun get(pos: Vec2): CellType =
         cells[pos] ?: CellType.AIR
 
+    fun crystals() =
+        cells.entries.filter { it.value == CellType.CRYSTAL }.map { it.key }
+
+    fun bud() =
+        cells.entries.filter { it.value == CellType.BUD }.map { it.key }
+
     fun print() {
         fun IntRange.expand(amount: Int = 1) =
             IntRange(this.first - amount, this.last + amount)
