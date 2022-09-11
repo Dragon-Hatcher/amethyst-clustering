@@ -88,6 +88,8 @@ data class Solution(val forProj: GeodeProjection, val groups: List<SolutionGroup
 
     fun stickyBlockCount() = groups.sumOf { it.blockCount() }
 
+    fun crystalCount() = forProj.crystals().size
+
     fun prettyPrint() {
         fun IntRange.expand(amount: Int = 1) =
             IntRange(this.first - amount, this.last + amount)
