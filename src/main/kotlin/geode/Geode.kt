@@ -45,6 +45,13 @@ class Geode(val buds: List<Vec3>) {
             cells[budXY.down()] = BlockType.CRYSTAL.max(cells[budXY.down()] ?: BlockType.AIR)
         }
 
+        // Remove completely surrounded crystals
+        for ((loc, type) in cells) {
+            if (type == BlockType.CRYSTAL && cells[loc.up()] == BlockType.BUD && cells[loc.down()] == BlockType.BUD && cells[loc.left()] == BlockType.BUD && cells[loc.right()] == BlockType.BUD) {
+                cells[loc] = BlockType.BUD
+            }
+        }
+
         return GeodeProjection(cells)
     }
 
