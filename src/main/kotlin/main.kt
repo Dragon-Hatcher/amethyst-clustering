@@ -2,18 +2,22 @@ import geode.Geode
 import solution.Solution
 import solution.Solver
 import solvers.MLFlexerSolver
+import solvers.PalaniJohnsonSolver
 import solvers.UselessSolver
 import kotlin.math.roundToInt
+
+const val PUSH_LIMIT = 12
 
 fun main() {
     testSolvers(
         UselessSolver(),
         MLFlexerSolver(),
-        MLFlexerSolver(merge=false)
+        MLFlexerSolver(merge=false),
+        PalaniJohnsonSolver()
     )
 }
 
-fun testSolvers(vararg solvers: Solver, iterations: Int = 100) {
+fun testSolvers(vararg solvers: Solver, iterations: Int = 1) {
     val percentTotals = MutableList(solvers.size) { 0.0 }
     val groupTotals = MutableList(solvers.size) { 0.0 }
     val blockTotals = MutableList(solvers.size) { 0.0 }
@@ -47,6 +51,7 @@ fun testSolvers(vararg solvers: Solver, iterations: Int = 100) {
         .sortedBy { blockTotals[it.index] }
         .sortedBy { groupTotals[it.index] }
         .sortedByDescending { percentTotals[it.index] }
+        .reversed()
         .forEach { (i, solver) ->
             println("${solver.name()}:")
             println("  Avg. Crystal Percentage: ${p(percentTotals[i] / iterations)}")

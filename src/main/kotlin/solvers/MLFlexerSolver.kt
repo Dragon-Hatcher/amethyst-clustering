@@ -1,5 +1,6 @@
 package solvers
 
+import PUSH_LIMIT
 import Vec2
 import geode.BlockType
 import geode.GeodeProjection
@@ -7,8 +8,6 @@ import solution.Solution
 import solution.SolutionGroup
 import solution.Solver
 import solution.StickyBlockType
-
-const val PUSH_LIMIT = 12
 
 class MLFlexerSolver(val merge: Boolean = true) : Solver {
     override fun name(): String = if (merge) "MLFlexer Solver" else "MLFlexer Solver (No Merge)"

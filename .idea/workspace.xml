@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8263d1f2-18a2-4322-a0dc-544f0b28fc8d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/PalaniJohnsonSolver.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/geode/Geode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/geode/Geode.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/geode/GeodeProjection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/geode/GeodeProjection.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/solution/Solution.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solution/Solution.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/solvers/MLFlexerSolver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/MLFlexerSolver.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/solvers/PathFinder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/PathFinder.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,14 +73,16 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/daniel/Documents/Programming/other_people/clusters/clusters.py",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   },
   "keyToStringList": {
     "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Python",
       "JAVA"
     ]
   }
@@ -92,7 +92,7 @@
       <recent name="geode" />
     </key>
   </component>
-  <component name="RunManager" selected="Java Scratch.scratch">
+  <component name="RunManager" selected="Kotlin.MainKt">
     <configuration name="Cluster" type="Java Scratch" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Cluster" />
       <option name="SCRATCH_FILE_URL" value="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.java" />
@@ -123,10 +123,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.MainKt" />
         <item itemvalue="Java Scratch.scratch" />
         <item itemvalue="Java Scratch.Scratch" />
         <item itemvalue="Java Scratch.Cluster" />
-        <item itemvalue="Kotlin.MainKt" />
       </list>
     </recent_temporary>
   </component>
@@ -139,6 +139,7 @@
       <option name="presentableId" value="Default" />
       <updated>1662862018755</updated>
       <workItem from="1662862020397" duration="17349000" />
+      <workItem from="1662882557137" duration="1480000" />
     </task>
     <servers />
   </component>
@@ -155,6 +156,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/solvers/PalaniJohnsonSolver.kt</url>
+          <line>23</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
