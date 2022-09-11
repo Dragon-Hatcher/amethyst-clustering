@@ -44,7 +44,7 @@ fun testSolvers(vararg solvers: Solver, iterations: Int = 100) {
     }
 
     fun p(num: Double): String =
-        "${(num * 100).roundToInt().toDouble() / 100}"
+        "${(num * 10000).roundToInt().toDouble() / 100}"
 
     fun r(num: Double): String =
         "${(num * 100).roundToInt().toDouble() / 100}"
