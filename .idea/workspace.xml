@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8263d1f2-18a2-4322-a0dc-544f0b28fc8d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/geode/Geode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/geode/Geode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/solution/Solution.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solution/Solution.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/solvers/MLFlexerSolver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/MLFlexerSolver.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/solvers/PalaniJohnsonSolver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/PalaniJohnsonSolver.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/solvers/UselessSolver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/UselessSolver.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +139,7 @@
       <option name="presentableId" value="Default" />
       <updated>1662862018755</updated>
       <workItem from="1662862020397" duration="17349000" />
-      <workItem from="1662882557137" duration="2734000" />
+      <workItem from="1662882557137" duration="4750000" />
     </task>
     <servers />
   </component>

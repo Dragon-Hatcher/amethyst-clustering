@@ -38,7 +38,7 @@ class PalaniJohnsonSolver() : Solver {
             }.toMutableList()
         }
 
-        return SolutionGroup(thisGroup, StickyBlockType.SLIME, Vec2(0, 0), true, Vec2(0, 0))
+        return SolutionGroup(thisGroup)
     }
 
     override fun solve(proj: GeodeProjection): Solution {

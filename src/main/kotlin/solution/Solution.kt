@@ -3,6 +3,7 @@ package solution
 import Vec2
 import geode.BlockType
 import geode.GeodeProjection
+import java.util.Collections
 
 enum class StickyBlockType {
     SLIME,
@@ -10,11 +11,11 @@ enum class StickyBlockType {
 }
 
 data class SolutionGroup(
-    val blockLocations: MutableSet<Vec2>,
-    val blockType: StickyBlockType,
-    val flyingMachineLoc: Vec2,
-    val flyingMachineIsVert: Boolean,
-    val immovableLoc: Vec2
+    var blockLocations: MutableSet<Vec2> = mutableSetOf(),
+    var blockType: StickyBlockType = StickyBlockType.SLIME,
+    var flyingMachineLoc: Vec2? = null,
+    var flyingMachineIsVert: Boolean? = null,
+    var immovableLoc: Vec2? = null
 ) {
     fun includes(loc: Vec2) = loc in blockLocations
 
@@ -69,7 +70,7 @@ fun getColor(i: Int): String {
     return ANSI_COLORS[i]
 }
 
-data class Solution(val forProj: GeodeProjection, val groups: List<SolutionGroup>) {
+data class Solution(val proj: GeodeProjection, var groups: MutableList<SolutionGroup>) {
 
 
     fun checkIfValid(): List<InvalidSolutionReason> {
@@ -77,8 +78,37 @@ data class Solution(val forProj: GeodeProjection, val groups: List<SolutionGroup
         return listOf()
     }
 
+    fun getType(x: Int, y: Int) = proj[x, y]
+    fun getType(pos: Vec2) = proj[pos]
+
+    fun getGroup(x: Int, y: Int): SolutionGroup? = getGroup(Vec2(x, y))
+    fun getGroup(pos: Vec2): SolutionGroup? = groups.find { pos in it.blockLocations }
+
+    fun makeEmptyGroup(): SolutionGroup {
+        val new = SolutionGroup()
+        groups.add(new)
+        return new
+    }
+
+    fun xRange() = proj.xRange()
+    fun yRange() = proj.yRange()
+
+    fun addGroup(group: SolutionGroup) {
+        groups.add(group)
+    }
+
+    fun removeGroup(group: SolutionGroup) =
+        groups.remove(group)
+
+    fun mergeGroups(base: SolutionGroup, other: SolutionGroup, withPath: Collection<Vec2>) {
+        val new = base.copy(blockLocations = (base.blockLocations + other.blockLocations + withPath).toMutableSet())
+        groups.remove(base)
+        groups.remove(other)
+        groups.add(new)
+    }
+
     fun crystalPercentage(): Double {
-        val crystals = forProj.crystals()
+        val crystals = proj.crystals()
         val covered = crystals.count { c -> groups.any { it.includes(c) } }
 
         return covered.toDouble() / crystals.count()
@@ -86,20 +116,26 @@ data class Solution(val forProj: GeodeProjection, val groups: List<SolutionGroup
 
     fun groupCount(): Int = groups.count()
 
+    fun findPath(x1: Int, y1: Int, x2: Int, y2: Int, group: SolutionGroup?) =
+        findPath(Vec2(x1, y1), Vec2(x2, y2), group)
+
+    fun findPath(start: Vec2, end: Vec2, group: SolutionGroup?) =
+        solvers.findPath(proj, start, end, group, groups)
+
     fun stickyBlockCount() = groups.sumOf { it.blockCount() }
 
-    fun crystalCount() = forProj.crystals().size
+    fun crystalCount() = proj.crystals().size
 
     fun prettyPrint() {
         fun IntRange.expand(amount: Int = 1) =
             IntRange(this.first - amount, this.last + amount)
 
-        val xRange = forProj.xRange().expand()
-        val yRange = forProj.yRange().expand()
+        val xRange = proj.xRange().expand()
+        val yRange = proj.yRange().expand()
 
         for (y in yRange) {
             for (x in xRange) {
-                when (forProj[x, y]) {
+                when (proj[x, y]) {
                     BlockType.AIR -> {
                         val groupNum = groups.indexOfFirst { Vec2(x, y) in it.blockLocations }
                         if (groupNum != -1) {
