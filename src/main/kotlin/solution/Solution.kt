@@ -9,7 +9,7 @@ enum class StickyBlockType {
 }
 
 data class SolutionGroup(
-    val blockLocations: Set<Vec2>,
+    val blockLocations: MutableSet<Vec2>,
     val blockType: StickyBlockType,
     val flyingMachineLoc: Vec2,
     val flyingMachineIsVert: Boolean,
@@ -18,6 +18,14 @@ data class SolutionGroup(
     fun includes(loc: Vec2) = loc in blockLocations
 
     fun blockCount() = blockLocations.size
+
+    fun addBlock(x: Int, y: Int) {
+        blockLocations.add(Vec2(x, y))
+    }
+
+    fun addBlock(pos: Vec2) {
+        blockLocations.add(pos)
+    }
 }
 
 enum class InvalidSolutionReason {

@@ -1,24 +1,14 @@
 import geode.Geode
 import solution.Solution
 import solution.Solver
+import solvers.MLFlexerSolver
 import solvers.UselessSolver
 
 fun main() {
     testSolvers(
-        UselessSolver()
+        UselessSolver(),
+        MLFlexerSolver()
     )
-//    val geode = Geode.random(5)
-//    val projectionX = geode.toProjection(Vec3Dir.X)
-//    val projectionY = geode.toProjection(Vec3Dir.Y)
-//    val projectionZ = geode.toProjection(Vec3Dir.Z)
-//    println("X:")
-//    projectionX.print()
-//    println("------------")
-//    println("Y:")
-//    projectionY.print()
-//    println("------------")
-//    println("Z:")
-//    projectionZ.print()
 }
 
 fun testSolvers(vararg solvers: Solver, iterations: Int = 1000) {
@@ -26,6 +16,7 @@ fun testSolvers(vararg solvers: Solver, iterations: Int = 1000) {
     val groupTotals = MutableList(solvers.size) { 0.0 }
     val blockTotals = MutableList(solvers.size) { 0.0 }
     val invalidSolutions = MutableList(solvers.size) { mutableListOf<Solution>() }
+    val worstSolution = MutableList(solvers.size) { null as Solution? }
 
     repeat(iterations) {
         val geode = Geode.random(5)
@@ -33,11 +24,15 @@ fun testSolvers(vararg solvers: Solver, iterations: Int = 1000) {
 
         for ((i, solver) in solvers.withIndex()) {
             val solution = solver.solve(proj)
-            percentTotals[i] += solution.crystalPercentage()
+            val percent = solution.crystalPercentage()
+            percentTotals[i] += percent
             groupTotals[i] += solution.groupCount().toDouble()
             blockTotals[i] += solution.stickyBlockCount().toDouble()
             if (solution.checkIfValid().isNotEmpty()) {
                 invalidSolutions[i].add(solution)
+            }
+            if (percent < (worstSolution[i]?.crystalPercentage() ?: 1.0)) {
+                worstSolution[i] = solution
             }
         }
     }
@@ -48,6 +43,11 @@ fun testSolvers(vararg solvers: Solver, iterations: Int = 1000) {
         println("  Avg. Group Count: ${groupTotals[i] / iterations}")
         println("  Avg. Block Count: ${blockTotals[i] / iterations}")
         println("  Num of Invalid Solutions: ${invalidSolutions[i].size} (${invalidSolutions[i].size / iterations * 100}%)")
+        if (worstSolution[i] != null) {
+            println("  Worst Solution:")
+            worstSolution[i]!!.prettyPrint()
+        }
+        println()
     }
 
 }

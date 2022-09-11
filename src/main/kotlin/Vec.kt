@@ -8,6 +8,8 @@ data class Vec2(val x: Int, val y: Int) {
     fun down() = Vec2(x, y + 1)
 
     override fun toString() = "(${x}, ${y})"
+
+    operator fun plus(other: Vec2) = Vec2(this.x + other.x, this.y + other.y)
 }
 
 enum class Vec3Dir {
