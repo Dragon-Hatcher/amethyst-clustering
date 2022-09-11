@@ -17,7 +17,7 @@ fun main() {
     )
 }
 
-fun testSolvers(vararg solvers: Solver, iterations: Int = 1) {
+fun testSolvers(vararg solvers: Solver, iterations: Int = 100) {
     val percentTotals = MutableList(solvers.size) { 0.0 }
     val groupTotals = MutableList(solvers.size) { 0.0 }
     val blockTotals = MutableList(solvers.size) { 0.0 }
