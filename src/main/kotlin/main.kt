@@ -41,18 +41,23 @@ fun testSolvers(vararg solvers: Solver, iterations: Int = 1000) {
     fun p(num: Double): String =
         "${(num * 10000).roundToInt().toDouble() / 100}%"
 
-    for ((i, solver) in solvers.withIndex()) {
-        println("${solver.name()}:")
-        println("  Avg. Crystal Percentage: ${p(percentTotals[i] / iterations)}")
-        println("  Avg. Group Count: ${groupTotals[i] / iterations}")
-        println("  Avg. Block Count: ${blockTotals[i] / iterations}")
-        println("  Num of Invalid Solutions: ${invalidSolutions[i].size} (${invalidSolutions[i].size / iterations * 100}%)")
-        val worst = worstSolution[i]
-        if (worst != null) {
-            println("  Worst Solution: ${p(worst.crystalPercentage())} crystals, ${worst.groupCount()} groups, ${worst.stickyBlockCount()} blocks")
-            worstSolution[i]!!.prettyPrint()
+    solvers
+        .withIndex()
+        .sortedBy { blockTotals[it.index] }
+        .sortedBy { groupTotals[it.index] }
+        .sortedByDescending { percentTotals[it.index] }
+        .forEach { (i, solver) ->
+            println("${solver.name()}:")
+            println("  Avg. Crystal Percentage: ${p(percentTotals[i] / iterations)}")
+            println("  Avg. Group Count: ${groupTotals[i] / iterations}")
+            println("  Avg. Block Count: ${blockTotals[i] / iterations}")
+            println("  Num of Invalid Solutions: ${invalidSolutions[i].size} (${invalidSolutions[i].size / iterations * 100}%)")
+            val worst = worstSolution[i]
+            if (worst != null) {
+                println("  Worst Solution: ${p(worst.crystalPercentage())} crystals, ${worst.groupCount()} groups, ${worst.stickyBlockCount()} blocks")
+                worstSolution[i]!!.prettyPrint()
+            }
+            println()
         }
-        println()
-    }
 
 }
