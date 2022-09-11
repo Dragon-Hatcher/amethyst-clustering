@@ -19,7 +19,7 @@ enum class CellType {
 class GeodeProjection(private val cells: Map<Vec2, CellType>) {
     fun xRange() =
         if (cells.keys.isEmpty()) 0..0 else
-            cells.keys.minOfOrNull { it.x }!!..cells.keys.maxOfOrNull { it.y }!!
+            cells.keys.minOfOrNull { it.x }!!..cells.keys.maxOfOrNull { it.x }!!
 
     fun yRange() =
         if (cells.keys.isEmpty()) 0..0 else

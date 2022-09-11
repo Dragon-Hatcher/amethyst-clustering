@@ -3,6 +3,7 @@ import solution.Solution
 import solution.Solver
 import solvers.MLFlexerSolver
 import solvers.UselessSolver
+import kotlin.math.roundToInt
 
 fun main() {
     testSolvers(
@@ -19,7 +20,7 @@ fun testSolvers(vararg solvers: Solver, iterations: Int = 1000) {
     val worstSolution = MutableList(solvers.size) { null as Solution? }
 
     repeat(iterations) {
-        val geode = Geode.random(5)
+        val geode = Geode.random(6)
         val proj = geode.toProjection(Vec3Dir.X)
 
         for ((i, solver) in solvers.withIndex()) {
@@ -31,20 +32,24 @@ fun testSolvers(vararg solvers: Solver, iterations: Int = 1000) {
             if (solution.checkIfValid().isNotEmpty()) {
                 invalidSolutions[i].add(solution)
             }
-            if (percent < (worstSolution[i]?.crystalPercentage() ?: 1.0)) {
+            if (worstSolution[i] == null || worstSolution[i]!!.betterThan(solution)) {
                 worstSolution[i] = solution
             }
         }
     }
 
+    fun p(num: Double): String =
+        "${(num * 10000).roundToInt().toDouble() / 100}%"
+
     for ((i, solver) in solvers.withIndex()) {
         println("${solver.name()}:")
-        println("  Avg. Crystal Percentage: ${percentTotals[i] / iterations * 100}%")
+        println("  Avg. Crystal Percentage: ${p(percentTotals[i] / iterations)}")
         println("  Avg. Group Count: ${groupTotals[i] / iterations}")
         println("  Avg. Block Count: ${blockTotals[i] / iterations}")
         println("  Num of Invalid Solutions: ${invalidSolutions[i].size} (${invalidSolutions[i].size / iterations * 100}%)")
-        if (worstSolution[i] != null) {
-            println("  Worst Solution:")
+        val worst = worstSolution[i]
+        if (worst != null) {
+            println("  Worst Solution: ${p(worst.crystalPercentage())} crystals, ${worst.groupCount()} groups, ${worst.stickyBlockCount()} blocks")
             worstSolution[i]!!.prettyPrint()
         }
         println()
