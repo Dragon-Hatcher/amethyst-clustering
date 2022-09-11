@@ -2,12 +2,12 @@ package geode
 
 import Vec2
 
-enum class CellType {
+enum class BlockType {
     AIR,
     CRYSTAL,
     BUD;
 
-    fun max(other: CellType) =
+    fun max(other: BlockType) =
         when {
             this == BUD || other == BUD -> BUD
             this == CRYSTAL || other == CRYSTAL -> CRYSTAL
@@ -16,7 +16,7 @@ enum class CellType {
 
 }
 
-class GeodeProjection(private val cells: Map<Vec2, CellType>) {
+class GeodeProjection(private val cells: Map<Vec2, BlockType>) {
     fun xRange() =
         if (cells.keys.isEmpty()) 0..0 else
             cells.keys.minOfOrNull { it.x }!!..cells.keys.maxOfOrNull { it.x }!!
@@ -25,17 +25,17 @@ class GeodeProjection(private val cells: Map<Vec2, CellType>) {
         if (cells.keys.isEmpty()) 0..0 else
             cells.keys.minOfOrNull { it.y }!!..cells.keys.maxOfOrNull { it.y }!!
 
-    operator fun get(x: Int, y: Int): CellType =
+    operator fun get(x: Int, y: Int): BlockType =
         get(Vec2(x, y))
 
-    operator fun get(pos: Vec2): CellType =
-        cells[pos] ?: CellType.AIR
+    operator fun get(pos: Vec2): BlockType =
+        cells[pos] ?: BlockType.AIR
 
     fun crystals() =
-        cells.entries.filter { it.value == CellType.CRYSTAL }.map { it.key }
+        cells.entries.filter { it.value == BlockType.CRYSTAL }.map { it.key }
 
     fun bud() =
-        cells.entries.filter { it.value == CellType.BUD }.map { it.key }
+        cells.entries.filter { it.value == BlockType.BUD }.map { it.key }
 
     fun print() {
         fun IntRange.expand(amount: Int = 1) =
@@ -44,9 +44,9 @@ class GeodeProjection(private val cells: Map<Vec2, CellType>) {
         for (y in yRange().expand()) {
             for (x in xRange().expand()) {
                 when (get(x, y)) {
-                    CellType.AIR -> print(" ")
-                    CellType.CRYSTAL -> print("\u001B[35m\u001B[1mx\u001B[0m")
-                    CellType.BUD -> print("\u001B[90m#\u001B[0m")
+                    BlockType.AIR -> print(" ")
+                    BlockType.CRYSTAL -> print("\u001B[35m\u001B[1mx\u001B[0m")
+                    BlockType.BUD -> print("\u001B[90m#\u001B[0m")
                 }
             }
             println()

@@ -32,17 +32,17 @@ class Geode(val buds: List<Vec3>) {
     }
 
     fun toProjection(dir: Vec3Dir): GeodeProjection {
-        val cells: MutableMap<Vec2, CellType> = mutableMapOf()
+        val cells: MutableMap<Vec2, BlockType> = mutableMapOf()
 
         for (budPosition in buds) {
             val budXY = budPosition.without(dir)
 
-            cells[budXY] = CellType.BUD
+            cells[budXY] = BlockType.BUD
 
-            cells[budXY.left()] = CellType.CRYSTAL.max(cells[budXY.left()] ?: CellType.AIR)
-            cells[budXY.right()] = CellType.CRYSTAL.max(cells[budXY.right()] ?: CellType.AIR)
-            cells[budXY.up()] = CellType.CRYSTAL.max(cells[budXY.up()] ?: CellType.AIR)
-            cells[budXY.down()] = CellType.CRYSTAL.max(cells[budXY.down()] ?: CellType.AIR)
+            cells[budXY.left()] = BlockType.CRYSTAL.max(cells[budXY.left()] ?: BlockType.AIR)
+            cells[budXY.right()] = BlockType.CRYSTAL.max(cells[budXY.right()] ?: BlockType.AIR)
+            cells[budXY.up()] = BlockType.CRYSTAL.max(cells[budXY.up()] ?: BlockType.AIR)
+            cells[budXY.down()] = BlockType.CRYSTAL.max(cells[budXY.down()] ?: BlockType.AIR)
         }
 
         return GeodeProjection(cells)

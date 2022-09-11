@@ -8,16 +8,17 @@ import kotlin.math.roundToInt
 fun main() {
     testSolvers(
         UselessSolver(),
-        MLFlexerSolver()
+        MLFlexerSolver(),
+        MLFlexerSolver(merge=false)
     )
 }
 
-fun testSolvers(vararg solvers: Solver, iterations: Int = 1000) {
+fun testSolvers(vararg solvers: Solver, iterations: Int = 100) {
     val percentTotals = MutableList(solvers.size) { 0.0 }
     val groupTotals = MutableList(solvers.size) { 0.0 }
     val blockTotals = MutableList(solvers.size) { 0.0 }
     val invalidSolutions = MutableList(solvers.size) { mutableListOf<Solution>() }
-    val worstSolution = MutableList(solvers.size) { null as Solution? }
+    val worstSolution: MutableList<Solution?> = MutableList(solvers.size) { null }
 
     repeat(iterations) {
         val geode = Geode.random(6)

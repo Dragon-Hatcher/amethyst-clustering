@@ -1,17 +1,17 @@
 package solvers
 
 import Vec2
-import geode.CellType
+import geode.BlockType
 import geode.GeodeProjection
 import solution.Solution
 import solution.SolutionGroup
 import solution.Solver
 import solution.StickyBlockType
 
-const val PUSH_LIMIT = 12;
+const val PUSH_LIMIT = 12
 
-class MLFlexerSolver : Solver {
-    override fun name(): String = "MLFlexer Solver"
+class MLFlexerSolver(val merge: Boolean = true) : Solver {
+    override fun name(): String = if (merge) "MLFlexer Solver" else "MLFlexer Solver (No Merge)"
 
     override fun solve(proj: GeodeProjection): Solution {
         val groups: MutableList<SolutionGroup> = mutableListOf()
@@ -29,12 +29,13 @@ class MLFlexerSolver : Solver {
             return groups.find { pos in it.blockLocations }
         }
 
+        // Create clusters
         for (x in proj.xRange()) {
             for (y in proj.yRange()) {
                 val curBlockType = proj[x, y]
                 var curBlockGroup = findBlocksGroup(x, y)
 
-                if (curBlockType == CellType.CRYSTAL) {
+                if (curBlockType == BlockType.CRYSTAL) {
 
                     if (noFirstClusterExists) {
                         curBlockGroup = newGroup()
@@ -51,7 +52,7 @@ class MLFlexerSolver : Solver {
                             val searchBlockType = proj[x2, y2]
                             val searchBlockGroup = findBlocksGroup(x2, y2)
 
-                            if (searchBlockType == CellType.CRYSTAL && searchBlockGroup == null) {
+                            if (searchBlockType == BlockType.CRYSTAL && searchBlockGroup == null) {
                                 if (curBlockGroup == null) {
                                     val path = findPath(proj, Vec2(x, y), Vec2(x2, y2), curBlockGroup, groups)
 
@@ -66,6 +67,43 @@ class MLFlexerSolver : Solver {
                                         path.forEach { curBlockGroup.addBlock(it) }
                                     }
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Merge clusters
+        if (merge) {
+            for (searchAreaWidth in 1..6) {
+                for (x in proj.xRange()) {
+                    for (y in proj.yRange()) {
+                        val curBlockType = proj[x, y]
+                        if (curBlockType != BlockType.CRYSTAL) continue
+
+                        val curBlockGroup = findBlocksGroup(x, y)
+                        if (curBlockGroup!!.blockCount() >= PUSH_LIMIT) continue
+
+                        for (x2 in (x - searchAreaWidth)..(x + searchAreaWidth)) {
+                            for (y2 in (y - searchAreaWidth)..(y + searchAreaWidth)) {
+                                if (x == x2 && y == y2) continue
+
+                                val searchBlockType = proj[x2, y2]
+                                if (searchBlockType != BlockType.CRYSTAL) continue
+
+                                val searchBlockGroup = findBlocksGroup(x2, y2)
+                                if (searchBlockGroup == curBlockGroup) continue
+                                if (curBlockGroup.blockCount() + searchBlockGroup!!.blockCount() > PUSH_LIMIT) continue
+
+                                val path = findPath(proj, Vec2(x, y), Vec2(x2, y2), searchBlockGroup, groups)
+
+                                if (path.isEmpty()) continue
+                                if (curBlockGroup.blockCount() + searchBlockGroup.blockCount() + path.size - 2 > PUSH_LIMIT) continue
+
+                                curBlockGroup.blockLocations.addAll(path)
+                                curBlockGroup.blockLocations.addAll(searchBlockGroup.blockLocations)
+                                groups.remove(searchBlockGroup)
                             }
                         }
                     }

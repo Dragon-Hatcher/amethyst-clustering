@@ -1,7 +1,7 @@
 package solution
 
 import Vec2
-import geode.CellType
+import geode.BlockType
 import geode.GeodeProjection
 
 enum class StickyBlockType {
@@ -98,7 +98,7 @@ data class Solution(val forProj: GeodeProjection, val groups: List<SolutionGroup
         for (y in yRange) {
             for (x in xRange) {
                 when (forProj[x, y]) {
-                    CellType.AIR -> {
+                    BlockType.AIR -> {
                         val groupNum = groups.indexOfFirst { Vec2(x, y) in it.blockLocations }
                         if (groupNum != -1) {
                             val color = getColor(groupNum)
@@ -108,7 +108,7 @@ data class Solution(val forProj: GeodeProjection, val groups: List<SolutionGroup
                         }
                     }
 
-                    CellType.CRYSTAL -> {
+                    BlockType.CRYSTAL -> {
                         val groupNum = groups.indexOfFirst { Vec2(x, y) in it.blockLocations }
                         val color = if (groupNum == -1) ANSI_GRAY else getColor(groupNum)
                         if (groupNum < 0) {
@@ -120,7 +120,7 @@ data class Solution(val forProj: GeodeProjection, val groups: List<SolutionGroup
                         }
                     }
 
-                    CellType.BUD -> print("$ANSI_GRAY##$ANSI_RESET")
+                    BlockType.BUD -> print("$ANSI_GRAY##$ANSI_RESET")
                 }
             }
             println()

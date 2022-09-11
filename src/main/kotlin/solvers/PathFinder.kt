@@ -1,7 +1,7 @@
 package solvers
 
 import Vec2
-import geode.CellType
+import geode.BlockType
 import geode.GeodeProjection
 import solution.SolutionGroup
 
@@ -36,7 +36,7 @@ fun findPath(
         val group = groupFor(pos)
         return pos.x in xRange &&
                 pos.y in yRange &&
-                proj[pos] != CellType.BUD &&
+                proj[pos] != BlockType.BUD &&
                 (group == null || group == myGroup)
     }
 
