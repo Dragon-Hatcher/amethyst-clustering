@@ -33,7 +33,7 @@ fun testSolvers(vararg solvers: Solver, iterations: Int = 500) {
             val percent = solution.crystalPercentage()
             percentTotals[i] += percent
             groupTotals[i] += solution.crystalCount() / solution.groupCount().toDouble()
-            blockTotals[i] +=  solution.stickyBlockCount().toDouble() / solution.crystalCount()
+            blockTotals[i] += solution.stickyBlockCount().toDouble() / solution.crystalCount()
             if (solution.checkIfValid().isNotEmpty()) {
                 invalidSolutions[i].add(solution)
             }

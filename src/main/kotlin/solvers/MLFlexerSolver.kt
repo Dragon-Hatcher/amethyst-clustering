@@ -65,7 +65,7 @@ class MLFlexerSolver(val merge: Boolean = true) : Solver {
         if (merge) {
             do {
                 var anyMerge = false
-                for (searchAreaWidth in 1..5) {
+                outerMost@for (searchAreaWidth in 1..5) {
                     for (x in proj.xRange()) {
                         for (y in proj.yRange()) {
                             val curBlockType = solution.getType(x, y)
@@ -92,6 +92,7 @@ class MLFlexerSolver(val merge: Boolean = true) : Solver {
 
                                     solution.mergeGroups(curBlockGroup, searchBlockGroup, path)
                                     anyMerge = true
+                                    break@outerMost // Seems to be slightly faster
                                 }
                             }
                         }
