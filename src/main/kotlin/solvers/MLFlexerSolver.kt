@@ -63,37 +63,41 @@ class MLFlexerSolver(val merge: Boolean = true) : Solver {
 
         // Merge clusters
         if (merge) {
-            for (searchAreaWidth in 1..6) {
-                for (x in proj.xRange()) {
-                    for (y in proj.yRange()) {
-                        val curBlockType = solution.getType(x, y)
-                        if (curBlockType != BlockType.CRYSTAL) continue
+            do {
+                var anyMerge = false
+                for (searchAreaWidth in 1..5) {
+                    for (x in proj.xRange()) {
+                        for (y in proj.yRange()) {
+                            val curBlockType = solution.getType(x, y)
+                            if (curBlockType != BlockType.CRYSTAL) continue
 
-                        val curBlockGroup = solution.getGroup(x, y)
-                        if (curBlockGroup!!.blockCount() >= PUSH_LIMIT) continue
+                            val curBlockGroup = solution.getGroup(x, y)
+                            if (curBlockGroup!!.blockCount() >= PUSH_LIMIT) continue
 
-                        for (x2 in (x - searchAreaWidth)..(x + searchAreaWidth)) {
-                            for (y2 in (y - searchAreaWidth)..(y + searchAreaWidth)) {
-                                if (x == x2 && y == y2) continue
+                            for (x2 in (x - searchAreaWidth)..(x + searchAreaWidth)) {
+                                for (y2 in (y - searchAreaWidth)..(y + searchAreaWidth)) {
+                                    if (x == x2 && y == y2) continue
 
-                                val searchBlockType = solution.getType(x2, y2)
-                                if (searchBlockType != BlockType.CRYSTAL) continue
+                                    val searchBlockType = solution.getType(x2, y2)
+                                    if (searchBlockType != BlockType.CRYSTAL) continue
 
-                                val searchBlockGroup = solution.getGroup(x2, y2)
-                                if (searchBlockGroup == curBlockGroup) continue
-                                if (curBlockGroup.blockCount() + searchBlockGroup!!.blockCount() > PUSH_LIMIT) continue
+                                    val searchBlockGroup = solution.getGroup(x2, y2)
+                                    if (searchBlockGroup == curBlockGroup) continue
+                                    if (curBlockGroup.blockCount() + searchBlockGroup!!.blockCount() > PUSH_LIMIT) continue
 
-                                val path = solution.findPath(x, y, x2, y2, searchBlockGroup)
+                                    val path = solution.findPath(x, y, x2, y2, searchBlockGroup)
 
-                                if (path.isEmpty()) continue
-                                if (curBlockGroup.blockCount() + searchBlockGroup.blockCount() + path.size - 2 > PUSH_LIMIT) continue
+                                    if (path.isEmpty()) continue
+                                    if (curBlockGroup.blockCount() + searchBlockGroup.blockCount() + path.size - 2 > PUSH_LIMIT) continue
 
-                                solution.mergeGroups(curBlockGroup, searchBlockGroup, path)
+                                    solution.mergeGroups(curBlockGroup, searchBlockGroup, path)
+                                    anyMerge = true
+                                }
                             }
                         }
                     }
                 }
-            }
+            } while (anyMerge)
         }
 
         return solution
