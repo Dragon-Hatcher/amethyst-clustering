@@ -23,15 +23,16 @@ class GeodeProjection(private val cells: Map<Vec2, BlockType>) {
     fun IntRange.expand(amount: Int = 1) =
         IntRange(this.first - amount, this.last + amount)
 
-    fun xRange() =
+
+    val xRange =
         if (cells.keys.isEmpty()) 0..0 else
             cells.keys.minOfOrNull { it.x }!!..cells.keys.maxOfOrNull { it.x }!!
 
-    fun yRange() =
+    val yRange =
         if (cells.keys.isEmpty()) 0..0 else
             cells.keys.minOfOrNull { it.y }!!..cells.keys.maxOfOrNull { it.y }!!
 
-    fun isInBounds(cell: Vec2) = cell.x in xRange().expand() && cell.y in yRange().expand()
+    fun isInBounds(cell: Vec2) = cell.x in xRange.expand() && cell.y in yRange.expand()
 
     operator fun get(x: Int, y: Int): BlockType =
         get(Vec2(x, y))
@@ -55,8 +56,8 @@ class GeodeProjection(private val cells: Map<Vec2, BlockType>) {
             }
 
     fun print() {
-        for (y in yRange().expand()) {
-            for (x in xRange().expand()) {
+        for (y in yRange.expand()) {
+            for (x in xRange.expand()) {
                 when (get(x, y)) {
                     BlockType.AIR -> print(" ")
                     BlockType.CRYSTAL -> print("$ANSI_GRAY..$ANSI_RESET")

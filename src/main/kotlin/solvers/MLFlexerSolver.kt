@@ -17,8 +17,8 @@ class MLFlexerSolver(val merge: Boolean = true) : Solver {
         var noFirstClusterExists = true
 
         // Create clusters
-        for (x in proj.xRange()) {
-            for (y in proj.yRange()) {
+        for (x in proj.xRange) {
+            for (y in proj.yRange) {
                 val curBlockType = solution.getType(x, y)
                 var curBlockGroup = solution.getGroup(x, y)
 
@@ -66,8 +66,8 @@ class MLFlexerSolver(val merge: Boolean = true) : Solver {
             do {
                 var anyMerge = false
                 outerMost@for (searchAreaWidth in 1..5) {
-                    for (x in proj.xRange()) {
-                        for (y in proj.yRange()) {
+                    for (x in proj.xRange) {
+                        for (y in proj.yRange) {
                             val curBlockType = solution.getType(x, y)
                             if (curBlockType != BlockType.CRYSTAL) continue
 

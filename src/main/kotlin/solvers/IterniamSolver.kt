@@ -8,7 +8,7 @@ import solution.Solution
 import solution.Solver
 import java.util.PriorityQueue
 
-class IterniamSolver : Solver {
+class IterniamSolver(val tries: Int = 1) : Solver {
     override fun name() = "Iterniam Solver"
 
     private fun calcAverageDist(cell: Vec2, solution: Solution): Double {
@@ -45,7 +45,7 @@ class IterniamSolver : Solver {
         return map
     }
 
-    override fun solve(proj: GeodeProjection): Solution {
+    fun oneSolution(proj: GeodeProjection): Solution {
         val solution = Solution(proj, mutableListOf())
 
         val unassigned = proj.crystals().toMutableSet()
@@ -54,7 +54,8 @@ class IterniamSolver : Solver {
         while (unassigned.isNotEmpty()) {
             val distanceMap = computeAverageDist(solution, unassigned, bridges)
 
-            val mostIsolated = unassigned.maxBy { distanceMap[it] ?: Double.NEGATIVE_INFINITY }
+            val mostIsolated =
+                unassigned.maxBy { (distanceMap[it] ?: Double.NEGATIVE_INFINITY) + (Math.random() * 2 - 1) }
             val newGroup = solution.makeEmptyGroup()
 
             val comparator = compareBy<Vec2> { -(distanceMap[it] ?: Double.POSITIVE_INFINITY) }
@@ -65,6 +66,9 @@ class IterniamSolver : Solver {
             neighborsSoFar.add(mostIsolated)
             while (newGroup.blockCount() < PUSH_LIMIT && queue.isNotEmpty()) {
                 val nextMember = queue.remove()
+
+                if (newGroup.blockCount() == PUSH_LIMIT - 1 && nextMember in bridges) continue
+
                 newGroup.addBlock(nextMember)
                 unassigned.remove(nextMember)
                 bridges.remove(nextMember)
@@ -77,6 +81,18 @@ class IterniamSolver : Solver {
                     neighborsSoFar.add(newNeighbor)
                 }
             }
+        }
+
+        return solution
+    }
+
+
+    override fun solve(proj: GeodeProjection): Solution {
+        var solution = oneSolution(proj)
+
+        repeat(tries - 1) {
+            val newSolution = oneSolution(proj)
+            if (newSolution.betterThan(solution)) solution = newSolution
         }
 
         return solution

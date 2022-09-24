@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8263d1f2-18a2-4322-a0dc-544f0b28fc8d" name="Changes" comment="Nicer output">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/IterniamSolver.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Vec.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Vec.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/geode/GeodeProjection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/geode/GeodeProjection.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/solution/Solution.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solution/Solution.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/solvers/IterniamSolver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/IterniamSolver.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/solvers/MLFlexerSolver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/MLFlexerSolver.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/solvers/PathFinder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/PathFinder.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +146,7 @@
       <workItem from="1662862020397" duration="17349000" />
       <workItem from="1662882557137" duration="6448000" />
       <workItem from="1662961297163" duration="6000" />
-      <workItem from="1663998070425" duration="6342000" />
+      <workItem from="1663998070425" duration="8617000" />
     </task>
     <task id="LOCAL-00001" summary="Parse geodes.txt">
       <created>1664000438075</created>

@@ -29,8 +29,8 @@ fun findPath(
     fun IntRange.expand(amount: Int = 1) =
         IntRange(this.first - amount, this.last + amount)
 
-    val xRange = proj.xRange().expand()
-    val yRange = proj.yRange().expand()
+    val xRange = proj.xRange.expand()
+    val yRange = proj.yRange.expand()
 
     fun isValid(pos: Vec2): Boolean {
         val group = groupFor(pos)

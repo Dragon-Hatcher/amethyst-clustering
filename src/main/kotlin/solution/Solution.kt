@@ -90,8 +90,8 @@ data class Solution(val proj: GeodeProjection, var groups: MutableList<SolutionG
         return new
     }
 
-    fun xRange() = proj.xRange()
-    fun yRange() = proj.yRange()
+    fun xRange() = proj.xRange
+    fun yRange() = proj.yRange
 
     fun addGroup(group: SolutionGroup) {
         groups.add(group)
@@ -127,8 +127,8 @@ data class Solution(val proj: GeodeProjection, var groups: MutableList<SolutionG
     fun crystalCount() = proj.crystals().size
 
     fun prettyPrint() {
-        val xRange = proj.xRange()
-        val yRange = proj.yRange()
+        val xRange = proj.xRange
+        val yRange = proj.yRange
 
         for (y in yRange) {
             for (x in xRange) {

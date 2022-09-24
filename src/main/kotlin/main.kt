@@ -16,7 +16,7 @@ fun main() {
         MLFlexerSolver(),
 //        MLFlexerSolver(merge = false),
 //        PalaniJohnsonSolver(),
-        IterniamSolver()
+        IterniamSolver(tries = 10)
     )
 }
 
