@@ -12,6 +12,9 @@ data class Vec2(val x: Int, val y: Int) {
     override fun toString() = "(${x}, ${y})"
 
     operator fun plus(other: Vec2) = Vec2(this.x + other.x, this.y + other.y)
+
+    fun isNeighborOf(other: Vec2) =
+        this.left() == other || this.right() == other || this.up() == other || this.down() == other
 }
 
 enum class Vec3Dir {

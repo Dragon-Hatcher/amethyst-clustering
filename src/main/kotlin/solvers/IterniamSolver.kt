@@ -101,6 +101,7 @@ class IterniamSolver(val tries: Int = 1) : Solver {
             if (newSolution.betterThan(solution)) solution = newSolution
         }
 
+        solveStickyType(solution)
         return solution
     }
 

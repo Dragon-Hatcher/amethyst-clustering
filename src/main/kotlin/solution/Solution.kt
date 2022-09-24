@@ -3,16 +3,17 @@ package solution
 import Vec2
 import geode.BlockType
 import geode.GeodeProjection
-import java.util.Collections
 
 enum class StickyBlockType {
     SLIME,
-    HONEY
+    SLIME_OFFSET,
+    HONEY,
+    HONEY_OFFSET;
 }
 
 data class SolutionGroup(
     var blockLocations: MutableSet<Vec2> = mutableSetOf(),
-    var blockType: StickyBlockType = StickyBlockType.SLIME,
+    var blockType: StickyBlockType? = null,
     var flyingMachineLoc: Vec2? = null,
     var flyingMachineIsVert: Boolean? = null,
     var immovableLoc: Vec2? = null
@@ -40,6 +41,10 @@ fun randomColor() = "\u001B[48;2;${randRGB()};${randRGB()};${randRGB()}m"
 
 const val ANSI_RESET = "\u001B[0m"
 const val ANSI_GRAY = "\u001B[38;2;128;128;128m"
+const val ANSI_SLIME = "\u001B[48;2;169;197;78m\u001B[30m"
+const val ANSI_SLIME_OFFSET = "\u001B[48;2;125;145;60m\u001B[30m"
+const val ANSI_HONEY = "\u001B[48;2;235;169;55m\u001B[30m"
+const val ANSI_HONEY_OFFSET = "\u001B[48;2;179;120;18m\u001B[30m"
 val ANSI_COLORS = mutableListOf(
     "\u001B[48;2;128;0;0m",
     "\u001B[48;2;170;110;40m",
@@ -71,7 +76,6 @@ fun getColor(i: Int): String {
 }
 
 data class Solution(val proj: GeodeProjection, var groups: MutableList<SolutionGroup>) {
-
 
     fun checkIfValid(): List<InvalidSolutionReason> {
         // TODO
@@ -107,6 +111,10 @@ data class Solution(val proj: GeodeProjection, var groups: MutableList<SolutionG
         groups.add(new)
     }
 
+    fun neighborsOfGroup(group: SolutionGroup): Collection<SolutionGroup> =
+        groups
+            .filter { it != group && it.blockLocations.any { group.blockLocations.any { gBlock -> gBlock.isNeighborOf(it) } } }
+
     fun crystalPercentage(): Double {
         val crystals = proj.crystals()
         val covered = crystals.count { c -> groups.any { it.includes(c) } }
@@ -126,26 +134,37 @@ data class Solution(val proj: GeodeProjection, var groups: MutableList<SolutionG
 
     fun crystalCount() = proj.crystals().size
 
-    fun prettyPrint() {
+    fun prettyPrint(colorStickBlocks: Boolean = false) {
         val xRange = proj.xRange
         val yRange = proj.yRange
+
+        fun findColor(loc: Vec2): String {
+            return if (colorStickBlocks) {
+                when (getGroup(loc)?.blockType) {
+                    StickyBlockType.SLIME -> ANSI_SLIME
+                    StickyBlockType.SLIME_OFFSET -> ANSI_SLIME_OFFSET
+                    StickyBlockType.HONEY -> ANSI_HONEY
+                    StickyBlockType.HONEY_OFFSET -> ANSI_HONEY_OFFSET
+                    null -> ANSI_GRAY
+                }
+            } else {
+                val groupNum = groups.indexOfFirst { loc in it.blockLocations }
+                if (groupNum == -1) ANSI_GRAY else getColor(groupNum)
+            }
+
+        }
 
         for (y in yRange) {
             for (x in xRange) {
                 when (proj[x, y]) {
                     BlockType.AIR -> {
-                        val groupNum = groups.indexOfFirst { Vec2(x, y) in it.blockLocations }
-                        if (groupNum != -1) {
-                            val color = getColor(groupNum)
-                            print("$color  $ANSI_RESET")
-                        } else {
-                            print("  ")
-                        }
+                        val color = findColor(Vec2(x, y))
+                        print("$color  $ANSI_RESET")
                     }
 
                     BlockType.CRYSTAL -> {
                         val groupNum = groups.indexOfFirst { Vec2(x, y) in it.blockLocations }
-                        val color = if (groupNum == -1) ANSI_GRAY else getColor(groupNum)
+                        val color = findColor(Vec2(x, y))
                         if (groupNum < 0) {
                             print("$color..$ANSI_RESET")
                         } else if (groupNum < 10) {

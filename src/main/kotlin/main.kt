@@ -13,7 +13,7 @@ const val PUSH_LIMIT = 12
 fun main() {
     testSolvers(
 //        UselessSolver(),
-        MLFlexerSolver(),
+//        MLFlexerSolver(),
 //        MLFlexerSolver(merge = false),
 //        PalaniJohnsonSolver(),
         IterniamSolver(tries = 20)
@@ -21,7 +21,7 @@ fun main() {
 }
 
 fun testSolvers(vararg solvers: Solver, file: String = "./src/main/resources/geodes.txt") {
-    val geodes = GeodeProjection.fromFile(file).slice(0..50)
+    val geodes = GeodeProjection.fromFile(file).subList(0, 50)
 
     val percentTotals = MutableList(solvers.size) { 0.0 }
     val groupTotals = MutableList(solvers.size) { 0.0 }
@@ -33,6 +33,7 @@ fun testSolvers(vararg solvers: Solver, file: String = "./src/main/resources/geo
 
     var iterations = 0
     geodes.forEach { proj ->
+        println("$iterations/${geodes.size}")
         for ((i, solver) in solvers.withIndex()) {
             val solution = solver.solve(proj)
             val percent = solution.crystalPercentage()
@@ -70,7 +71,7 @@ fun testSolvers(vararg solvers: Solver, file: String = "./src/main/resources/geo
                     )
                 } Crystals / Group)"
             )
-            solution.prettyPrint()
+            solution.prettyPrint(true)
         }
     }
 
