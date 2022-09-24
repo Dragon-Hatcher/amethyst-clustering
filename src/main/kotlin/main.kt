@@ -21,7 +21,7 @@ fun main() {
 }
 
 fun testSolvers(vararg solvers: Solver, file: String = "./src/main/resources/geodes.txt") {
-    val geodes = GeodeProjection.fromFile(file)
+    val geodes = GeodeProjection.fromFile(file).slice(0..50)
 
     val percentTotals = MutableList(solvers.size) { 0.0 }
     val groupTotals = MutableList(solvers.size) { 0.0 }

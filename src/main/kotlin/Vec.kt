@@ -7,6 +7,8 @@ data class Vec2(val x: Int, val y: Int) {
     fun up() = Vec2(x, y - 1)
     fun down() = Vec2(x, y + 1)
 
+    fun neighbors() = listOf(left(), right(), up(), down())
+
     override fun toString() = "(${x}, ${y})"
 
     operator fun plus(other: Vec2) = Vec2(this.x + other.x, this.y + other.y)

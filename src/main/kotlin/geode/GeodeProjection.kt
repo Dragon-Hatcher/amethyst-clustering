@@ -20,6 +20,9 @@ enum class BlockType {
 }
 
 class GeodeProjection(private val cells: Map<Vec2, BlockType>) {
+    fun IntRange.expand(amount: Int = 1) =
+        IntRange(this.first - amount, this.last + amount)
+
     fun xRange() =
         if (cells.keys.isEmpty()) 0..0 else
             cells.keys.minOfOrNull { it.x }!!..cells.keys.maxOfOrNull { it.x }!!
@@ -27,6 +30,8 @@ class GeodeProjection(private val cells: Map<Vec2, BlockType>) {
     fun yRange() =
         if (cells.keys.isEmpty()) 0..0 else
             cells.keys.minOfOrNull { it.y }!!..cells.keys.maxOfOrNull { it.y }!!
+
+    fun isInBounds(cell: Vec2) = cell.x in xRange().expand() && cell.y in yRange().expand()
 
     operator fun get(x: Int, y: Int): BlockType =
         get(Vec2(x, y))
@@ -40,10 +45,16 @@ class GeodeProjection(private val cells: Map<Vec2, BlockType>) {
     fun bud() =
         cells.entries.filter { it.value == BlockType.BUD }.map { it.key }
 
-    fun print() {
-        fun IntRange.expand(amount: Int = 1) =
-            IntRange(this.first - amount, this.last + amount)
+    fun bridges() =
+        cells
+            .entries
+            .filter { it.value == BlockType.CRYSTAL }
+            .flatMap { it.key.neighbors() }
+            .filter { cell ->
+                this[cell] == BlockType.AIR && cell.neighbors().map { this[it] }.count { it == BlockType.CRYSTAL } >= 2
+            }
 
+    fun print() {
         for (y in yRange().expand()) {
             for (x in xRange().expand()) {
                 when (get(x, y)) {
@@ -60,7 +71,7 @@ class GeodeProjection(private val cells: Map<Vec2, BlockType>) {
         fun fromFile(path: String): List<GeodeProjection> {
             val geodes = mutableListOf<GeodeProjection>()
 
-            val lines = File(path).also { println(it.absolutePath) }.readLines()
+            val lines = File(path).readLines()
             var curr = mutableMapOf<Vec2, BlockType>()
             var row = 0
             for (line in lines) {

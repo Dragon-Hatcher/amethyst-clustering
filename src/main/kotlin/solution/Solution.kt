@@ -166,12 +166,12 @@ data class Solution(val proj: GeodeProjection, var groups: MutableList<SolutionG
         val tCP = this.crystalPercentage()
         val oCP = other.crystalPercentage()
         return if (tCP == oCP) {
-            val tGC = this.groupCount()
-            val oGC = other.groupCount()
+            val tGC = this.crystalCount().toDouble() / this.groupCount().toDouble()
+            val oGC = other.crystalCount().toDouble() / other.groupCount().toDouble()
             if (tGC == oGC) {
                 this.stickyBlockCount() < other.stickyBlockCount()
             } else {
-                tGC < oGC
+                tGC > oGC
             }
         } else {
             tCP > oCP
