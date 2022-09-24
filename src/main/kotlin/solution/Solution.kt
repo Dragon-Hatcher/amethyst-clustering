@@ -127,11 +127,8 @@ data class Solution(val proj: GeodeProjection, var groups: MutableList<SolutionG
     fun crystalCount() = proj.crystals().size
 
     fun prettyPrint() {
-        fun IntRange.expand(amount: Int = 1) =
-            IntRange(this.first - amount, this.last + amount)
-
-        val xRange = proj.xRange().expand()
-        val yRange = proj.yRange().expand()
+        val xRange = proj.xRange()
+        val yRange = proj.yRange()
 
         for (y in yRange) {
             for (x in xRange) {

@@ -28,6 +28,8 @@ fun testSolvers(vararg solvers: Solver, file: String = "./src/main/resources/geo
     val blockTotals = MutableList(solvers.size) { 0.0 }
     val invalidSolutions = MutableList(solvers.size) { mutableListOf<Solution>() }
     val worstSolution: MutableList<Solution?> = MutableList(solvers.size) { null }
+    val bestSolution: MutableList<Solution?> = MutableList(solvers.size) { null }
+    val bunnySolution: MutableList<Solution?> = MutableList(solvers.size) { null }
 
     var iterations = 0
     geodes.forEach { proj ->
@@ -43,6 +45,12 @@ fun testSolvers(vararg solvers: Solver, file: String = "./src/main/resources/geo
             if (worstSolution[i] == null || worstSolution[i]!!.betterThan(solution)) {
                 worstSolution[i] = solution
             }
+            if (bestSolution[i] == null || solution.betterThan(bestSolution[i]!!)) {
+                bestSolution[i] = solution
+            }
+            if (iterations == 0) {
+                bunnySolution[i] = solution
+            }
         }
         iterations++
     }
@@ -52,6 +60,19 @@ fun testSolvers(vararg solvers: Solver, file: String = "./src/main/resources/geo
 
     fun r(num: Double): String =
         "${(num * 100).roundToInt().toDouble() / 100}"
+
+    fun show(solution: Solution?, name: String) {
+        if (solution != null && solution.groupCount() != 0) {
+            println(
+                "  $name Solution: ${p(solution.crystalPercentage())}% crystals, ${solution.groupCount()} groups, ${solution.stickyBlockCount()} blocks for ${solution.crystalCount()} crystals (${
+                    r(
+                        solution.crystalCount().toDouble() / solution.groupCount()
+                    )
+                } Crystals / Group)"
+            )
+            solution.prettyPrint()
+        }
+    }
 
     solvers
         .withIndex()
@@ -65,11 +86,9 @@ fun testSolvers(vararg solvers: Solver, file: String = "./src/main/resources/geo
             println("  Avg. Crystals / Group : ${r(groupTotals[i] / iterations)}")
             println("  Avg. Blocks / Crystal: ${r(blockTotals[i] / iterations)}")
             println("  Num of Invalid Solutions: ${invalidSolutions[i].size} (${invalidSolutions[i].size / iterations * 100}%)")
-            val worst = worstSolution[i]
-            if (worst != null) {
-                println("  Worst Solution: ${p(worst.crystalPercentage())}% crystals, ${worst.groupCount()} groups, ${worst.stickyBlockCount()} blocks for ${worst.crystalCount()} crystals")
-                worstSolution[i]!!.prettyPrint()
-            }
+            show(worstSolution[i], "Worst")
+            show(bestSolution[i], "Best")
+            show(bunnySolution[i], "\"Bunny\"")
             println()
         }
 

@@ -1,6 +1,8 @@
 package geode
 
 import Vec2
+import solution.ANSI_GRAY
+import solution.ANSI_RESET
 import java.io.File
 
 enum class BlockType {
@@ -46,8 +48,8 @@ class GeodeProjection(private val cells: Map<Vec2, BlockType>) {
             for (x in xRange().expand()) {
                 when (get(x, y)) {
                     BlockType.AIR -> print(" ")
-                    BlockType.CRYSTAL -> print("\u001B[35m\u001B[1mx\u001B[0m")
-                    BlockType.BUD -> print("\u001B[90m#\u001B[0m")
+                    BlockType.CRYSTAL -> print("$ANSI_GRAY..$ANSI_RESET")
+                    BlockType.BUD -> print("$ANSI_GRAY##$ANSI_RESET")
                 }
             }
             println()
@@ -55,20 +57,22 @@ class GeodeProjection(private val cells: Map<Vec2, BlockType>) {
     }
 
     companion object {
-        fun fromFile(path: String): Sequence<GeodeProjection> = sequence {
+        fun fromFile(path: String): List<GeodeProjection> {
+            val geodes = mutableListOf<GeodeProjection>()
+
             val lines = File(path).also { println(it.absolutePath) }.readLines()
             var curr = mutableMapOf<Vec2, BlockType>()
             var row = 0
             for (line in lines) {
                 if (line == "") {
-                    yield(GeodeProjection(curr))
+                    geodes.add(GeodeProjection(curr))
                     curr = mutableMapOf()
                     row = 0
                     continue
                 }
 
                 for ((i, block) in line.filterIndexed { i, _ -> i % 2 == 0 }.withIndex()) {
-                    curr[Vec2(row, i)] = when (block) {
+                    curr[Vec2(i, row)] = when (block) {
                         '.' -> BlockType.CRYSTAL
                         '#' -> BlockType.BUD
                         else -> BlockType.AIR
@@ -76,6 +80,8 @@ class GeodeProjection(private val cells: Map<Vec2, BlockType>) {
                 }
                 row += 1
             }
+
+            return geodes
         }
     }
 }
