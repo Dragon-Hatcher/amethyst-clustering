@@ -1,6 +1,7 @@
 package geode
 
 import Vec2
+import java.io.File
 
 enum class BlockType {
     AIR,
@@ -50,6 +51,31 @@ class GeodeProjection(private val cells: Map<Vec2, BlockType>) {
                 }
             }
             println()
+        }
+    }
+
+    companion object {
+        fun fromFile(path: String): Sequence<GeodeProjection> = sequence {
+            val lines = File(path).also { println(it.absolutePath) }.readLines()
+            var curr = mutableMapOf<Vec2, BlockType>()
+            var row = 0
+            for (line in lines) {
+                if (line == "") {
+                    yield(GeodeProjection(curr))
+                    curr = mutableMapOf()
+                    row = 0
+                    continue
+                }
+
+                for ((i, block) in line.filterIndexed { i, _ -> i % 2 == 0 }.withIndex()) {
+                    curr[Vec2(row, i)] = when (block) {
+                        '.' -> BlockType.CRYSTAL
+                        '#' -> BlockType.BUD
+                        else -> BlockType.AIR
+                    }
+                }
+                row += 1
+            }
         }
     }
 }

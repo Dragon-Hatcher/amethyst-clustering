@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8263d1f2-18a2-4322-a0dc-544f0b28fc8d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/IterniamSolver.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/geodes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/geode/GeodeProjection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/geode/GeodeProjection.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/solvers/MLFlexerSolver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/solvers/MLFlexerSolver.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +73,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/daniel/Documents/Programming/other_people/clusters/clusters.py",
+    "last_opened_file_path": "/home/daniel/Documents/Programming/amethyst-clustering/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -85,6 +88,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="geode" />
     </key>
@@ -136,7 +142,9 @@
       <option name="presentableId" value="Default" />
       <updated>1662862018755</updated>
       <workItem from="1662862020397" duration="17349000" />
-      <workItem from="1662882557137" duration="5793000" />
+      <workItem from="1662882557137" duration="6448000" />
+      <workItem from="1662961297163" duration="6000" />
+      <workItem from="1663998070425" duration="1386000" />
     </task>
     <servers />
   </component>

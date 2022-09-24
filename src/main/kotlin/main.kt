@@ -1,6 +1,8 @@
 import geode.Geode
+import geode.GeodeProjection
 import solution.Solution
 import solution.Solver
+import solvers.IterniamSolver
 import solvers.MLFlexerSolver
 import solvers.PalaniJohnsonSolver
 import solvers.UselessSolver
@@ -10,24 +12,25 @@ const val PUSH_LIMIT = 12
 
 fun main() {
     testSolvers(
-        UselessSolver(),
+//        UselessSolver(),
         MLFlexerSolver(),
-        MLFlexerSolver(merge = false),
-        PalaniJohnsonSolver()
+//        MLFlexerSolver(merge = false),
+//        PalaniJohnsonSolver(),
+        IterniamSolver()
     )
 }
 
-fun testSolvers(vararg solvers: Solver, iterations: Int = 500) {
+fun testSolvers(vararg solvers: Solver, file: String = "./src/main/resources/geodes.txt") {
+    val geodes = GeodeProjection.fromFile(file)
+
     val percentTotals = MutableList(solvers.size) { 0.0 }
     val groupTotals = MutableList(solvers.size) { 0.0 }
     val blockTotals = MutableList(solvers.size) { 0.0 }
     val invalidSolutions = MutableList(solvers.size) { mutableListOf<Solution>() }
     val worstSolution: MutableList<Solution?> = MutableList(solvers.size) { null }
 
-    repeat(iterations) {
-        val geode = Geode.random(6)
-        val proj = geode.toProjection(Vec3Dir.X)
-
+    var iterations = 0
+    geodes.forEach { proj ->
         for ((i, solver) in solvers.withIndex()) {
             val solution = solver.solve(proj)
             val percent = solution.crystalPercentage()
@@ -41,6 +44,7 @@ fun testSolvers(vararg solvers: Solver, iterations: Int = 500) {
                 worstSolution[i] = solution
             }
         }
+        iterations++
     }
 
     fun p(num: Double): String =
