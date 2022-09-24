@@ -4,6 +4,9 @@ import PUSH_LIMIT
 import Vec2
 import geode.BlockType
 import geode.GeodeProjection
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import solution.Solution
 import solution.Solver
 import java.util.PriorityQueue
@@ -86,11 +89,14 @@ class IterniamSolver(val tries: Int = 1) : Solver {
         return solution
     }
 
+    private fun prepeat(times: Int, f: suspend () -> Unit) = runBlocking {
+        (0 until times).map { async(Dispatchers.Default) { f() } }.map { it.await() }
+    }
 
     override fun solve(proj: GeodeProjection): Solution {
         var solution = oneSolution(proj)
 
-        repeat(tries - 1) {
+        prepeat(tries - 1) {
             val newSolution = oneSolution(proj)
             if (newSolution.betterThan(solution)) solution = newSolution
         }
